@@ -1,11 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
+  <title>ToDo List</title>
 </head>
+
 <body>
-  
+  <div id="view">
+    <header>
+      <div id="title">
+        <img src="./assets/images/check.png">
+        <h1>ToDo List</h1>
+      </div>
+    </header>
+    <div id="content">
+      <div id="left-panel">
+        <aside>
+          <ul>
+            <li>
+              <button id="inbox-btn">
+                <img src="./assets/images/inbox.png">
+                <p>Inbox</p>
+              </button>
+            </li>
+            <li><button id="today-btn">
+                <img src="./assets/images/today.png">
+                <p>Today</p>
+              </button>
+            </li>
+            <li>
+              <button id="week-btn">
+                <img src="./assets/images/week.png">
+                <p>This week</p>
+              </button>
+            </li>
+            <li>
+              <button id="notes-btn">
+                <img src="./assets/images/notes.png">
+                <p>Notes</p>
+              </button>
+            </li>
+          </ul>
+          <h2>Projects</h2>
+          <ul class="scrollable">
+            <li>
+              <button>
+                <img src="./assets/images/plus.png">
+                <p>Add Project</p>
+              </button>
+            </li>
+            <li>
+              <button>
+                <img src="./assets/images/checklist.png">
+                <p>Undefined</p>
+              </button>
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div id="right-panel">
+        <h2>Inbox</h2>
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+          <li>Item 4</li>
+        </ul>
+        <button>
+          <img>
+          <p>Add Project</p>
+        </button>
+      </div>
+    </div>
+    <footer>
+      <h3>
+        <b>Copyright © 2024 Reksee-Firewall</b>
+      </h3>
+        <a href="https://github.com/Reksee-Firewall" target="_blank">
+          <img src="./assets/images/github-mark-white.png"/>
+        </a>
+    </footer>
+  </div>
 </body>
+
 </html>
