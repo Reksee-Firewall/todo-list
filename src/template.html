@@ -33,15 +33,15 @@
             <li>
               <button id="week-btn">
                 <img src="./assets/images/week.png">
-                <p>This week</p>
+                <p>This Week</p>
               </button>
             </li>
-            <li>
+            <!-- <li>
               <button id="notes-btn">
                 <img src="./assets/images/notes.png">
                 <p>Notes</p>
               </button>
-            </li>
+            </li> -->
           </ul>
           <h2>Projects</h2>
           <ul class="scrollable">
@@ -62,25 +62,92 @@
       </div>
       <div id="right-panel">
         <h2>Inbox</h2>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-        </ul>
-        <button>
-          <img>
-          <p>Add Project</p>
-        </button>
+        <div id="right-scroll">
+          <ul>
+            <li>
+              <div class="task">
+                <button id="add-task-btn" class="add">
+                  <img src="./assets/images/plus.png">
+                  <p>Add Task</p>
+                </button>
+              </div>
+            </li>
+            <!-- <li>
+              <div class="task" id="task-01">
+                <div class="priority-sign"></div>
+                <button class="checkbox-btn">
+                  <img src="./assets/images/check.png">
+                </button>
+                <p class="task-title">
+                  Wake up Early
+                </p>
+                <button class="details-btn">
+                  <p>Details</p>
+                </button>
+                <p class="task-date">
+                  Jun 8th
+                </p>
+                <button class="edit-btn">
+                  <img src="./assets/images/edit.png">
+                </button>
+                <button class="delete-btn">
+                  <img src="./assets/images/trash.png">
+                </button>
+              </div>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="task-modal" class="modal">
+      <div class="modal-content">
+        <div class="upper">
+          <h2 id='modal-title'>Add Task</h2>
+          <p class="close-btn">&times;</p>
+        </div>
+        <div class="lower">
+          <aside>
+            <label for="task-title">Title</label>
+            <input type="text" id="task-title" placeholder="Enter task title" />
+          </aside>
+          <aside>
+            <label for="task-date">Date</label>
+            <input type="text" id="task-date" placeholder="Enter task date" />
+          </aside>
+          <aside>
+            <label>Priority</label>
+            <ul id="task-priority-list">
+              <li>
+                <button id="task-low">
+                  Low
+                </button>
+              </li>
+              <li>
+                <button id="task-medium">
+                  Medium
+                </button>
+              </li>
+              <li>
+                <button id="task-high">
+                  High
+                </button>
+              </li>
+            </ul>
+          </aside>
+        </div>
+        <div id="text">
+          <textarea id="task-details"></textarea>
+        </div>
+        <button id="save-task-btn">Save Task</button>
       </div>
     </div>
     <footer>
       <h3>
         <b>Copyright © 2024 Reksee-Firewall</b>
       </h3>
-        <a href="https://github.com/Reksee-Firewall" target="_blank">
-          <img src="./assets/images/github-mark-white.png"/>
-        </a>
+      <a href="https://github.com/Reksee-Firewall" target="_blank">
+        <img src="./assets/images/github-mark-white.png"/>
+      </a>
     </footer>
   </div>
 </body>

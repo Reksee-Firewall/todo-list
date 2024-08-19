@@ -1,0 +1,67 @@
+const TaskModule = (() => {
+  const checkImg = './assets/images/check.png';
+  const editImg = './assets/images/edit.png';
+  const trashImg = './assets/images/trash.png';
+
+  class Task {
+    constructor(id, title, date) {
+      this.id = id;
+      this.title = title;
+      this.date = date;
+    }
+
+    createElement(tag, className, content = '') {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      if (content) element.innerHTML = content;
+      return element;
+    }
+
+    createImageButton(className, src) {
+      const button = this.createElement('button', className);
+      const img = this.createElement('img');
+      img.src = src;
+      button.appendChild(img);
+      return button;
+    }
+
+    render() {
+      const taskDiv = this.createElement('div', 'task');
+      taskDiv.id = this.id;
+
+      const prioritySign = this.createElement('div', 'priority-sign');
+      taskDiv.appendChild(prioritySign);
+
+      const checkboxBtn = this.createImageButton('checkbox-btn', checkImg);
+      taskDiv.appendChild(checkboxBtn);
+
+      const taskTitle = this.createElement('p', 'task-title', this.title);
+      taskDiv.appendChild(taskTitle);
+
+      const detailsBtn = this.createElement('button', 'details-btn', '<p>Details</p>');
+      taskDiv.appendChild(detailsBtn);
+
+      const taskDate = this.createElement('p', 'task-date', this.date);
+      taskDiv.appendChild(taskDate);
+
+      const editBtn = this.createImageButton('edit-btn', editImg);
+      taskDiv.appendChild(editBtn);
+
+      const deleteBtn = this.createImageButton('delete-btn', trashImg);
+      taskDiv.appendChild(deleteBtn);
+
+      return taskDiv;
+    }
+  }
+
+  return {
+    Task,
+  };
+})();
+
+export { TaskModule };
+
+// Exemplo de Uso
+
+const myTask = new TaskModule.Task(1, 'Learn JavaScript', '2024-08-18');
+document.body.appendChild(myTask.render());

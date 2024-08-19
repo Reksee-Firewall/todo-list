@@ -1,0 +1,37 @@
+# date-fns  
+
+O date-fns é uma biblioteca focada em manipulação e formatação de datas em JavaScript, mas não oferece uma interface de usuário (UI) 
+pronta para seleção de datas. Ele é uma biblioteca utilitária que funciona em conjunto com outras bibliotecas de UI para fornecer
+funcionalidades de manipulação de datas.
+
+  import { format } from 'date-fns';
+
+  const dataAtual = new Date();
+
+  // Formatar a data como 'dd/MM/yyyy'
+  const dataFormatada = format(dataAtual, 'dd/MM/yyyy');
+  console.log(dataFormatada); // Exemplo de saída: '19/08/2024'
+
+  // Formatar a data com dia da semana, mês, dia e ano
+  const dataCompleta = format(dataAtual, 'EEEE, MMMM do, yyyy');
+  console.log(dataCompleta); // Exemplo de saída: 'Monday, August 19th, 2024'
+
+  // Formatar a data com horas, minutos e segundos
+  const horaFormatada = format(dataAtual, 'HH:mm:ss');
+  console.log(horaFormatada); // Exemplo de saída: '14:35:10'
+
+# flatpick
+
+Oferece um componente de calendário leve e pode ser combinado com date-fns para manipulação de datas.
+
+  import flatpickr from 'flatpickr';
+  import { format } from 'date-fns';
+
+  const input = document.querySelector('#datepicker');
+  flatpickr(input, {
+    onChange: function(selectedDates, dateStr, instance) {
+      const formattedDate = format(selectedDates[0], 'dd/MM/yyyy');
+      console.log('Data selecionada:', formattedDate);
+    }
+  });
+

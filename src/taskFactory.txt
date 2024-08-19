@@ -1,0 +1,65 @@
+import checkImg from './assets/images/check.png';
+import editImg from './assets/images/edit.png';
+import trashImg from './assets/images/trash.png';
+
+function createElementFactory(tag) {
+  return function (className, content = '') {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (content) element.innerHTML = content;
+    return element;
+  };
+}
+
+function createImageButtonFactory(src) {
+  return function (className) {
+    const button = createElementFactory('button')(className);
+    const img = createElementFactory('img')();
+    img.src = src;
+    button.appendChild(img);
+    return button;
+  };
+}
+
+function createTaskFactory(id, title, date) {
+  return function () {
+    const createDiv = createElementFactory('div');
+    const createParagraph = createElementFactory('p');
+    const createButton = createElementFactory('button');
+    
+    const taskDiv = createDiv('task');
+    taskDiv.id = id;
+
+    const prioritySign = createDiv('priority-sign');
+    taskDiv.appendChild(prioritySign);
+
+    const checkboxBtn = createImageButtonFactory(checkImg)('checkbox-btn');
+    taskDiv.appendChild(checkboxBtn);
+
+    const taskTitle = createParagraph('task-title', title);
+    taskDiv.appendChild(taskTitle);
+
+    const detailsBtn = createButton('details-btn', '<p>Details</p>');
+    taskDiv.appendChild(detailsBtn);
+
+    const taskDate = createParagraph('task-date', date);
+    taskDiv.appendChild(taskDate);
+
+    const editBtn = createImageButtonFactory(editImg)('edit-btn');
+    taskDiv.appendChild(editBtn);
+
+    const deleteBtn = createImageButtonFactory(trashImg)('delete-btn');
+    taskDiv.appendChild(deleteBtn);
+
+    return taskDiv;
+  };
+}
+
+export { createTaskFactory };
+
+// Exemplo de Uso
+
+import { createTaskFactory } from './taskFactory';
+
+const task = createTaskFactory('1', 'Sample Task', '2024-08-18')();
+document.body.appendChild(task);
