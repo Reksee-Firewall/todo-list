@@ -8,13 +8,14 @@ import { notify } from './observer.js';
  * Notifica o controlador sobre interações com o usuário
  */
 class Task {
-  constructor(id, title, date, details='', priority=0, check=0) {
+  constructor(id, title, date, details='', priority=0, check=0, projectId=0) {
     this.id = id;
     this.title = title;
     this.date = date;
     this.details = details;
     this.priority = priority;
     this.check = check;
+    this.projectId = projectId;
   }
 
   createElement(tag, className, content = '') {

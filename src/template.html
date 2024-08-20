@@ -18,7 +18,7 @@
     <div id="content">
       <div id="left-panel">
         <aside>
-          <ul>
+          <ul id="upper-buttons">
             <li>
               <button id="inbox-btn">
                 <img src="./assets/images/inbox.png">
@@ -44,17 +44,24 @@
             </li> -->
           </ul>
           <h2>Projects</h2>
-          <ul class="scrollable">
+          <ul id="lower-buttons" class="scrollable">
             <li>
-              <button>
+              <button id="add-project-btn">
                 <img src="./assets/images/plus.png">
                 <p>Add Project</p>
               </button>
             </li>
-            <li>
-              <button>
+            <li id="add-project-form">
+              <button id="add-project-form-btn">
+                <input type="text" id="add-project-input" placeholder="Enter name" />
+                <div id="add-project-submit">Add</div>
+              </button>
+            </li>
+            <li id="project-0" class="project">
+              <button id="project-0-btn">
                 <img src="./assets/images/checklist.png">
-                <p>Undefined</p>
+                <p>Default</p>
+                <!-- <p class="close-btn">&times;</p> -->
               </button>
             </li>
           </ul>
@@ -103,7 +110,7 @@
       <div class="modal-content">
         <div class="upper">
           <h2 id='modal-title'>Add Task</h2>
-          <p class="close-btn">&times;</p>
+          <p id="modal-close-btn" class="close-btn">&times;</p>
         </div>
         <div class="lower">
           <aside>
@@ -135,6 +142,12 @@
             </ul>
           </aside>
         </div>
+        <div class="dropdown-container">
+          <select id="item-select">
+              <option value="0">Default</option>
+              <!-- <option value="1">Item 1</option> -->
+          </select>
+      </div>
         <div id="text">
           <textarea id="task-details"></textarea>
         </div>
