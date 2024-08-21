@@ -6,28 +6,50 @@ import flatpickr from 'flatpickr';
 import { format } from 'date-fns';
 
 // Variáveis globais
-let uniqueId = 0;
-let uniqueProjectId = 0;
+let uniqueTaskId = loadFromLocalStorage('uniqueTaskId') || 4;
+let uniqueProjectId = loadFromLocalStorage('uniqueProjectId') || 1;
 let onEdit = -1;
 let isAdd = 0;
-let projects = [
-  { id: uniqueProjectId++, name: 'Default' },
+let projects = loadFromLocalStorage('projects') || [
+  { id: 0, name: 'Default' },
 ];
-let inboxItems = [
-  { id: uniqueId++, title: 'Wake up Early', details:'', date: '01/01/2024', priority: 0, check: 0, project_id: 0},
-  { id: uniqueId++, title: 'Meeting with Team', details:'', date: '01/01/2024', priority: 1, check: 0, project_id: 0},
-  { id: uniqueId++, title: 'Grocery Shopping', details:'', date: '01/01/2024', priority: 2, check: 0, project_id: 0},
-  { id: uniqueId++, title: 'Dentist Appointment', details:'', date: '01/01/2024', priority: 0, check: 1, project_id: 0},
+
+let inboxItems = loadFromLocalStorage('inboxItems') || [
+  { id: 0, title: 'Wake up Early', details:'', date: '01/01/2024', priority: 0, check: 0, project_id: 0},
+  { id: 1, title: 'Meeting with Team', details:'', date: '01/01/2024', priority: 1, check: 0, project_id: 0},
+  { id: 2, title: 'Grocery Shopping', details:'', date: '01/01/2024', priority: 2, check: 0, project_id: 0},
+  { id: 3, title: 'Dentist Appointment', details:'', date: '01/01/2024', priority: 0, check: 1, project_id: 0},
 ];
+
 let todayItems = [];
 let weekItems = [];
 let selectedButton;
+
+// Função para carregar dados do localStorage
+function loadFromLocalStorage(key) {
+  const data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : null;
+}
+
+// Função para salvar dados no localStorage
+function saveToLocalStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Salva inboxItems e projects no localStorage sempre que houver uma mudança
+function updateLocalStorage() {
+  saveToLocalStorage('inboxItems', inboxItems);
+  saveToLocalStorage('projects', projects);
+  saveToLocalStorage('uniqueTaskId', uniqueTaskId);
+  saveToLocalStorage('uniqueProjectId', uniqueProjectId);
+}
 
 // Função para inscrição em observador taskDeleted
 subscribe('taskDeleted', (data) => {
   console.log(`Task deleted: ${data.title} (ID: ${data.id})`);
   const dataId = parseInt((String (data.id).split('-'))[1]);
   inboxItems = inboxItems.filter(item => item.id !== dataId);
+  updateLocalStorage(); 
 });
 
 // Função para inscrição em observador taskEditor
@@ -54,6 +76,7 @@ subscribe('taskCheck', (data) => {
   } else {
     task.check = 0;
   }
+  updateLocalStorage();
 });
 
 // Função para alternar o botão de prioridade selecionado
@@ -65,6 +88,27 @@ function togglePriorityButtonSelection(buttonId) {
     selectedButton.classList.add('selected');
   }
 }
+
+// Draw stored projects
+(() => {
+  projects.forEach((p) => {
+    if (p.id != 0) {
+      drawNewProject(p);
+      document.querySelector(`#project-${p.id}-btn .close-btn`).addEventListener('click', function() {
+        projects = projects.filter(item => item.id != p.id);
+        inboxItems.forEach((item) => {
+          if (item.project_id == p.id) {
+            item.project_id = 0;
+          }
+        });
+        const li = document.getElementById(`project-${p.id}`); 
+        li.remove();
+        updateLocalStorage();
+      });
+      setupButton(`project-${p.id}-btn`, `${p.name}`, []);
+    }
+  })
+})();
 
 /**
  * 0 = add
@@ -238,13 +282,13 @@ function changeContent(title, items) {
   // Atualizar para receber o ProjectId correto
   // Função para criar e adicionar uma nova task
   function addNewTask(title, date, details, taskPriority, selectedProjectValue) {
-    uniqueId += 1;
-    const newTask = new Task(`task-${uniqueId}`, title, date, details, taskPriority, selectedProjectValue);
+    uniqueTaskId += 1;
+    const newTask = new Task(`task-${uniqueTaskId}`, title, date, details, taskPriority, selectedProjectValue);
     const li = document.createElement('li');
     li.appendChild(newTask.render());
     ul.appendChild(li);
     // Externo
-    inboxItems.push({ id: uniqueId, title: title, date: date, details: details, priority: taskPriority, check: 0, project_id: selectedProjectValue});
+    inboxItems.push({ id: uniqueTaskId, title: title, date: date, details: details, priority: taskPriority, check: 0, project_id: selectedProjectValue});
     // <--
     // items.push({ title, date }); 
   }
@@ -329,10 +373,12 @@ function changeContent(title, items) {
         taskQuery.priority = taskPriority;
         taskQuery.project_id = selectedProjectValue;
         updateContent(selectedButton.id, title, items);
+        updateLocalStorage();
       }
       if (isAdd == 1) { // Add
         addNewTask(taskTitle, taskDate, taskDetails, taskPriority, selectedProjectValue);
         updateContent(selectedButton.id, title, items);
+        updateLocalStorage();
       } // View   
       closeModal();
     }
@@ -455,6 +501,7 @@ document.querySelector('#add-project-submit').addEventListener('click', function
     const p = projects.find(item => item.id == uniqueProjectId);
     uniqueProjectId++; 
     drawNewProject(p);
+    updateLocalStorage();
     document.querySelector(`#project-${p.id}-btn .close-btn`).addEventListener('click', function() {
       projects = projects.filter(item => item.id != p.id);
       inboxItems.forEach((item) => {
